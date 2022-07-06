@@ -41,7 +41,7 @@ ul{
 
 .table, th {
   border: 2px solid;
-  width: 45%;
+  /* width: 45%; */
   padding: .5em;
   text-align: justify;
   background-color: rgb(166, 255, 0)

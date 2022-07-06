@@ -7,9 +7,16 @@
         <title>Document</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap">
         <link rel="stylesheet" href="css/simple-grid.css">
+        <script src="pizzaCartAlpine.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/alpinejs" defer></script>
-        <script src="pizzaCartAlpine.js"></script>
+        
+
+        <script>
+        
+          
+            
+        </script>
 
         <title>Kiddies Pizza</title>
     </head>
@@ -183,6 +190,40 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-12 head">
+                        <h2 style="text-align: center ;">Available Pizzas</h2>
+                    </div>
+                </div> 
+
+                <div x-text="message"></div>
+
+                <div class="row">
+
+                    <div class="col-12">
+
+
+                        <strong x-text="pizzas.length"></strong>
+
+                        <table>
+
+                            <template x-for="pizza in pizzas">
+                                <tr>
+                                    <th x-text="pizza.flavour"></th>
+                                    <th x-text="pizza.size"></th>
+                                    <th x-text="pizza.price"></th>
+                                    <th>
+                                        <button>Buy</button>
+                                    </th>
+                                    
+                                <tr>
+    
+                            </template>
+    
+                        </table>
+                    </div> 
+                </div>
+
             <footer style="background-color: orange;" class="row">
                 <div class="col-6">
                     <ul>
@@ -200,6 +241,7 @@
                     </ul> 
                 </div>
             </footer> 
+
         </div>
     </body>
 

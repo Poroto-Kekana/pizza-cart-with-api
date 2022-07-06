@@ -81,6 +81,27 @@ document.addEventListener("alpine:init", () =>  {
                 this.smallQty = 0;
                 paymentAmount = 0;
                 paymentMessage = '';
+            },
+
+            init() {
+                //call the API to get all pizzas
+                //set this.pizzas
+
+                const pizzaCartURL = 'https://pizza-cart-api.herokuapp.com/api/pizzas';
+
+                axios 
+                    .get(pizzaCartURL)
+                    .then((result) => {
+                        this.pizzas = result.data.pizzas;
+                    })
+
+                    
+            },
+            message : 'Eating Pizzas',
+            pizzas : [],
+
+            loadPizzas() {
+
             }
     }))
 })
