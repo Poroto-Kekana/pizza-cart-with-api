@@ -1,87 +1,6 @@
 document.addEventListener("alpine:init", () => {
     Alpine.data("pizzaCart", () => ({
-        cart: false,
-        mediumTotal: 0.00,
-        mediumQty: 0,
-        largeTotal: 0.00,
-        largeQty: 0,
-        smallTotal: 0.00,
-        smallQty: 0,
-        payNow: false,
-        paymentAmount: 0,
-        paymentMessage: '',
-
-
-        cartTotal() {
-            return this.largeTotal + this.mediumTotal + this.smallTotal
-        },
-
-        buyMediumPizza() {
-            this.mediumTotal += 78.99
-            this.mediumQty += 1
-        },
-
-        clearMediumPizza() {
-            if (this.mediumQty > 0) {
-                this.mediumTotal -= 78.99
-                this.mediumQty -= 1
-            }
-        },
-
-        buyLargePizza() {
-            this.largeTotal += 180.99
-            this.largeQty += 1
-        },
-
-        clearLargePizza() {
-            if (this.largeQty > 0) {
-                this.largeTotal -= 180.99
-                this.largeQty -= 1
-            }
-        },
-
-        buySmallPizza() {
-            this.smallTotal += 38.99
-            this.smallQty += 1
-        },
-
-        clearSmallPizza() {
-            if (this.smallQty > 0) {
-                this.smallTotal -= 38.99
-                this.smallQty -= 1
-            }
-        },
-        totalQty() {
-            return this.mediumQty + this.largeQty + this.smallQty;
-        },
-
-        makePayment() {
-            if (this.paymentAmount === 0 || !this.paymentAmount) {
-                this.paymentMessage = 'No Amount Entered!'
-            }
-            else if (this.paymentAmount >= this.cartTotal()) {
-                this.paymentMessage = 'Payment Successful!'
-
-                setTimeout(() => {
-                    this.payNow = false
-                    this.clearCart()
-                }, 4000);
-            }
-            else {
-                this.paymentMessage = 'Insuffienct Amount!'
-            }
-        },
-
-        clearCart() {
-            this.mediumTotal = 0.00;
-            this.mediumQty = 0;
-            this.largeTotal = 0.00;
-            this.largeQty = 0;
-            this.smallTotal = 0.00;
-            this.smallQty = 0;
-            paymentAmount = 0;
-            paymentMessage = '';
-        },
+       
 
         init() {
             //call the API to get all pizzas
@@ -134,6 +53,7 @@ document.addEventListener("alpine:init", () => {
         cartId : '',
         cart : { total: 0 },
         amountPaid : 0,
+        paymentResponse : '',
 
         add(pizza) {
             // cart Id so that user can add pizza to id
@@ -165,13 +85,25 @@ document.addEventListener("alpine:init", () => {
                 })
         }, 
 
-        payPizza() {
+        payPizza(cart_code) {
 
             axios
                 .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/${this.cartId}/pay')
                 .then(() => {
-                    this.amountPaid = this.cart.total
+                    cart.total = this.amountPaid
+                    this.paymentResponse = data.status
+                })
+        },
+
+        featuredPizzas() {
+
+            axios
+                .get('https://pizza-cart-api.herokuapp.com/api/pizzas/featured')
+                .then((results) => {
+                    this.pizzas = result.data.pizza
                 })
         }
+ 
+
     }))
 })

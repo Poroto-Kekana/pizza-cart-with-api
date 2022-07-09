@@ -25,124 +25,96 @@
 <body>
     <div style="background-color: yellow ;" class="container" x-data="pizzaCart">
 
-        <div class="row">
-
-            <div>
-
-                <button x-on:click="cart=true" style="height:50px;width:50px"><Strong>Open<img style="width: 40%"
-                            src="Images/cart.jpg" alt=""></strong></button>
-
-                <a href=""><strong>R<span class="Qty"
-                            x-text="cartTotal().toFixed(2)"><strong>0</strong></span><strong></strong></a>
-
-            </div>
 
 
+        <div class="row" x-show="cart">
 
-            <div class="row" x-show="cart">
+            <div class="col-6">
+
 
                 <div class="row">
 
-                    <div x-show="cartTotal() > 0" style="background-color: orangered ;">
-                        <h1 style="text-align: center ;">Welcome to your Cart...</h1>
-                    </div>
+                    <div>
 
-                </div>
-
-                <div class="row">
-
-                    <button x-show="cartTotal() > 0" x-on:click="cart=false"
-                        style="height:50px;width:50px"><strong>Close<img style="width: 40%" src="Images/cart.jpg"
-                                alt=""></strong></button>
-
-                </div>
-
-                <div class="col-6">
-                    
-                   
-                    <div class="row">
-        
-                        <div>
-        
-                            <div class="user">
-                                Who is buying the pizzas: <input type="text" x-model="username">
-                            </div>
-
-                            <div class="row cartIdSec">
-                                <span x-text="message"></span>
-                                <span x-text="cartId"></span>
-                            </div>
-
-                            <div>
-                                <div>
-                                    Cart Total: <strong x-text="cart.total"></strong>
-                                </div>
-                            </div>
-        
+                        <div class="user">
+                            Who is buying the pizzas: <input type="text" x-model="username">
                         </div>
-        
+
+                        <div class="row cartIdSec">
+                            <span x-text="message"></span>
+                            <span x-text="cartId"></span>
+                        </div>
+
+                        <div>
+                            <div>
+                                Cart Total: <strong x-text="cart.total"></strong>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <table>
-
-                        <div class="row cart">
-
-
-
-                            <table>
-                                <tr>
-                                    <td>Flavour</td>
-                                    <td>Qty</td>
-                                    <td>Total</td>
-                                </tr>
-
-                                <template x-for="pizza in cart.pizzas">
-                                     <tr>
-                                         <td x-text="pizza.flavour"></td>
-                                         <td> <button x-on:click="remove(pizza)">-</button> <input type="text" disabled="true" x-model="pizza.qty"> <button x-on:click="add(pizza)">+</button> </td>
-                                         <td x-text="pizza.total"></td>
-                                     </tr>
-                                </template>
-
-                                <tr x-show="!cart.pizzas">
-                                    <td colspan="3">
-                                        <span>You have not added pizza to your Cart.</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="3"><button x-bind:disabled="!cart.pizzas">Pay</button></td>
-                                </tr>
-                            </table>
-             
-                         </div>
-
-                        <tr>
-                            <td x-show="cartTotal() > 0">
-                                <div x-show="payNow">
-                                    <div style="background-color:aqua; width: 95.5%; text-align: justify; padding: 1em 0em 1em 0em;"
-                                        class="message" x-text="paymentMessage"></div>
-                                    <div>
-                                        <label for="">Payment Amount......</label>
-                                        R<input class="input" type="number" placeholder="Payment amount"
-                                            x-model="paymentAmount">
-                                        <button x-on:click="makePayment()" style="height:50px;width:50px"><img
-                                                style="width: 25%;" src="Images/cart1.png" alt=""><span>Pay
-                                                Now</span></button>
-                                    </div>
-                            </td>
-                            <td x-show="cartTotal() > 0">
-                                <img style="width:25%;" src="Images/image 1 (1).png" alt="">
-                            </td>
-                            <td x-show="cartTotal() > 0">
-                                <button x-show="!payNow" x-on:click="payNow=true" style="height:50px;width:50px"><img
-                                        style="width: 35%;" src="Images/cart1.png" alt=""><span>Pay</span></button>
-                            </td>
-                        </tr>
-
-                    </table>
                 </div>
+
+                <table>
+
+                    <div class="row cart">
+
+
+
+                        <table>
+                            <tr>
+                                <td>Flavour</td>
+                                <td>Qty</td>
+                                <td>Total</td>
+                            </tr>
+
+                            <template x-for="pizza in cart.pizzas">
+                                <tr>
+                                    <td x-text="pizza.flavour"></td>
+                                    <td> <button x-on:click="remove(pizza)">-</button> <input type="text"
+                                            disabled="true" x-model="pizza.qty"> <button
+                                            x-on:click="add(pizza)">+</button> </td>
+                                    <td x-text="pizza.total"></td>
+                                </tr>
+                            </template>
+
+                            <tr x-show="!cart.pizzas">
+                                <td colspan="3">
+                                    <span>You have not added pizza to your Cart.</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <input type="text" placeholder="Enter payment Amount" x-bind:disabled="!cart.pizzas"
+                                        x-model="amountPaid">
+                                    <button x-bind:disabled="!cart.pizzas" @click="payPizza">Pay</button>
+                                    <span x-text="paymentResponse"></span>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <tr>
+                        <td x-show="cartTotal() > 0">
+                            <div x-show="payNow">
+                                <div style="background-color:aqua; width: 95.5%; text-align: justify; padding: 1em 0em 1em 0em;"
+                                    class="message" x-text="paymentMessage"></div>
+                                <div>
+                                    <label for="">Payment Amount......</label>
+                                    R<input class="input" type="number" placeholder="Payment amount"
+                                        x-model="paymentAmount">
+                                    <button x-on:click="makePayment()" style="height:50px;width:50px"><img
+                                            style="width: 25%;" src="Images/cart1.png" alt=""><span>Pay
+                                            Now</span></button>
+                                </div>
+                        </td>
+                    </tr>
+
+                </table>
             </div>
+        </div>
 
 
             <div class="pizzas">
@@ -151,84 +123,6 @@
                     <h1 style="text-align: center ;">PizzaHub kiddies Menu</h1>
                 </div>
 
-                <!-- <div class="row" style="background-color: aqua;">
-
-                    <div class="col-4">
-                        
-                        <img style="width: 100%;" src="Images/pizza1.jpg" alt="">
-                        <ul>
-                            <div class="row">
-                                <div class="col-6">
-                                    <li>Medium Pizza</li>
-                                    <button class="buy order" x-on:click="buyMediumPizza" >BUY</button>
-                                </div>
-
-                                <div class="col-3">
-                                    <li>R78.99</li>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <li>Medium Margeritha Pizza with 3 toppings max. 2 or less meat topping. 3 or less other toppings.</li>
-                                </div>
-                            </div>
-                        </ul>
-
-                    </div>
-
-                    <div class="col-4">
-                        
-                        <img style="width: 100%;" src="Images/pizza1.jpg" alt="">
-                        <ul>
-                            <div class="row">
-                                <div class="col-6">
-                                    <li>Large Pizza</li>
-                                    <button class="buy order" x-on:click="buyLargePizza">BUY</button>
-                                </div>
-
-                                <div class="col-3">
-                                    <li>R180.99</li>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <li>Large Margeritha Pizza with 3 toppings max. 3 meat toppings max. 3 or less other toppings.</li>
-                                </div>
-                            </div>
-                        </ul>
-                        
-                    </div>
-
-                    <div class="col-4">
-
-                        <img style="width: 100%;" src="Images/pizza1.jpg" alt="">
-                        <ul>
-                            <div class="row">
-                                <div class="col-6">
-                                    <li>Small Pizza</li>
-                                    <button class="buy order" x-on:click="buySmallPizza">BUY</button>
-                                </div>
-
-                                <div class="col-3">
-                                    <li>R38.99</li>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-12">
-                                    <li>Small Margeritha Pizza with 3 toppings
-                                        1 meat topping.
-                                        3 or less other toppings.
-                                    </li>
-                                </div>
-                            </div>
-                                
-                        </ul>
-                        
-                    </div>
-                </div> -->
             </div>
 
             <div class="row AvailablePizza">
@@ -236,66 +130,73 @@
                     <h2 style="text-align: center ;">Available Pizzas</h2>
                 </div>
             </div>
-            
-           
 
-            <div class="row pizzalist">
+            <div >
+                
+                <template x-for="pizza in pizzas">
+                    <div x-text="featuredPizzas"></div> 
+                </template>
+            <div>
 
-                <table>
+
+
+        <div class="row pizzalist">
+
+            <table>
+
+                <tr>
+                    <th>
+                        <div class="pizzaCount">
+                            We a total of: <strong x-text="pizzas.length"></strong> pizzas to choose from
+                        </div>
+                    </th>
+                    <th>Flavour</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th> </th>
+                </tr>
+
+                <template x-for="pizza in pizzas">
 
                     <tr>
-                        <th>
-                            <div class="pizzaCount">
-                                We a total of: <strong x-text="pizzas.length"></strong> pizzas to choose from
-                            </div>
-                        </th>
-                        <th>Flavour</th>
-                        <th>Size</th>
-                        <th>Price</th>
-                        <th> </th>
-                    </tr>
 
-                    <template x-for="pizza in pizzas">
+                        <td>
+                            <img x-bind:src="pizzaImg(pizza)" width="50" alt="">
+                        </td>
+                        <td x-text="pizza.flavour"></td>
+                        <td x-text="pizza.size"></td>
+                        <td x-text="pizza.price"></td>
+                        <td>
+                            <button x-on:click="add(pizza)">Add to Cart</button>
+                        </td>
 
-                        <tr>
-                            
-                            <td>
-                                <img x-bind:src="pizzaImg(pizza)" width="50" alt="">
-                            </td>
-                            <td x-text="pizza.flavour"></td>
-                            <td x-text="pizza.size"></td>
-                            <td x-text="pizza.price"></td>
-                            <td>
-                                <button x-on:click="add(pizza)">Add to Cart</button>
-                            </td>
+                    <tr>
 
-                        <tr>
+                </template>
 
-                    </template>
+            </table>
 
-                </table>
+        </div>
 
+        <footer style="background-color: orange;" class="row">
+            <div class="col-6">
+                <ul>
+                    <li>Contact us at: (015)-491-5263 twitter</li>
+                    <li>/fb</li>
+                    <li>/insta</li>
+                    <li>@perfectpizza</li>
+                </ul>
             </div>
-
-                <footer style="background-color: orange;" class="row">
-                    <div class="col-6">
-                        <ul>
-                            <li>Contact us at: (015)-491-5263 twitter</li>
-                            <li>/fb</li>
-                            <li>/insta</li>
-                            <li>@perfectpizza</li>
-                        </ul>
-                    </div>
-                    <div class="col-6">
-                        <ul>
-                            <li>Pizza Palace</li>
-                            <li>Pretori Road</li>
-                            <li>Jubilee Mall</li>
-                        </ul>
-                    </div>
-                </footer>
-
+            <div class="col-6">
+                <ul>
+                    <li>Pizza Palace</li>
+                    <li>Pretori Road</li>
+                    <li>Jubilee Mall</li>
+                </ul>
             </div>
+        </footer>
+
+    </div>
 </body>
 
 </html>
