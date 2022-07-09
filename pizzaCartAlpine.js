@@ -105,7 +105,7 @@ document.addEventListener("alpine:init", () => {
         },
 
         pizzaImg(pizza) {
-            return `/Images/${pizza.flavour}.jpeg`;
+            return `./Images/${pizza.size}.jpg`;
         },
 
 
@@ -117,21 +117,23 @@ document.addEventListener("alpine:init", () => {
 
 
         showCart() {
-            const url = `https://pizza-cart-api.herokuapp.com/api/pizza-cart/${this.cartId}/get`
+            const url = `https://pizza-cart-api.herokuapp.com/api/pizza-cart/${this.cartId}/get`;
 
             axios
                 .get(url)
                 .then((result) => {
                     this.cart = result.data;
+                    console.log(this.cart)
                 });
 
         },
 
-        message: '',
+        message: 'Your Cart Id :',
         username: 'Archibald',
         pizzas: [],
         cartId : '',
         cart : { total: 0 },
+        amountPaid : 0,
 
         add(pizza) {
             // cart Id so that user can add pizza to id
@@ -141,11 +143,35 @@ document.addEventListener("alpine:init", () => {
             }
 
             axios
-                .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/add',params)
+                .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/add', params)
                 .then(() => {
                     this.message = "Pizza added to the cart"
                     this.showCart();
             })
+        },
+
+        remove(pizza) {
+
+            const params = {
+                card_code: this.cartId,
+                pizza_id: pizza.id
+            }
+
+            axios
+                .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/remove', params)
+                .then(() => {
+                    this.message = "Pizza removed from the cart"
+                    this.showCart();
+                })
+        }, 
+
+        payPizza() {
+
+            axios
+                .post('https://pizza-cart-api.herokuapp.com/api/pizza-cart/${this.cartId}/pay')
+                .then(() => {
+                    this.amountPaid = this.cart.total
+                })
         }
     }))
 })
