@@ -65,9 +65,9 @@
                             <td x-text="pizza.flavour"></td>
 
                             <td>
-                                <button x-on:click="add(pizza)">+</button>
-                                <input type="text" disabled="true" x-model="pizza.qty"> 
                                 <button x-on:click="remove(pizza)">-</button>
+                                <input type="text" disabled="true" x-model="pizza.qty"> 
+                                <button x-on:click="add(pizza)">+</button>
                             </td>
 
                             <td x-text="pizza.total"></td>
