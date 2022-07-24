@@ -51,6 +51,12 @@ input {
   width: 25%;
 }
 
+button {
+  border: 1px solid;
+  width: 50%
+}
+
+
 .footprint {
   background-color: orangered;
 }

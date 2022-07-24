@@ -94,6 +94,30 @@
             
         </div>
 
+        <div class="row">
+            <div class="col-12">
+                <table>
+                    <template x-for="pizza in featuredPizzas">
+                        <tr>
+
+                            <td>
+                                <img x-bind:src="pizzaImg(pizza)" width="50" alt="">
+                            </td>
+                            <td x-text="pizza.flavour"></td>
+                            <td x-text="pizza.size"></td>
+                            <td x-text="pizza.price"></td>
+                            <td>
+                                <button x-on:click="add(pizza)">Add to Cart</button>
+                                <button x-on:click="setFeaturedPizza(pizza, false)">Remove Featured Pizza</button>
+                            </td>
+    
+                        <tr>
+                    </template>
+                </table>
+
+            </div>
+        </div>
+
         
 
 
@@ -102,7 +126,7 @@
                 <h2>Available Pizzas</h2>
             </div>
         </div>
-
+ 
 
         <div class="row pizzalist">
 
@@ -132,6 +156,7 @@
                         <td x-text="pizza.price"></td>
                         <td>
                             <button x-on:click="add(pizza)">Add to Cart</button>
+                            <button x-on:click="setFeaturedPizza(pizza, true)">Feature Pizza</button>
                         </td>
 
                     <tr>

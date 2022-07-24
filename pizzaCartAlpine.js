@@ -17,9 +17,10 @@ document.addEventListener("alpine:init", () => {
                     return this.creatCart();
                 })
                 .then((result) => {
-                    // console.log(result)
-                    this.cartId = result.data.cart_code;
-                    // console.log(this.cartId)
+                    this.cartId = result.data.cart_code;  
+                })
+                .then(() => {
+                    return this.createFeaturedPizzas();
                 });
 
         },
@@ -43,7 +44,7 @@ document.addEventListener("alpine:init", () => {
                 .get(url)
                 .then((result) => {
                     this.cart = result.data;
-                    console.log(this.cart)
+                    
                 });
 
         },
@@ -55,6 +56,7 @@ document.addEventListener("alpine:init", () => {
         cart: { total: 0 },
         amount: 0,
         paymentResponse: '',
+        featuredPizzas: [],
 
         add(pizza) {
             // cart Id so that user can add pizza to id
@@ -135,12 +137,27 @@ document.addEventListener("alpine:init", () => {
                
         },
 
-        featuredPizzas(pizza) {
+        createFeaturedPizzas() {
 
             axios
                 .get('https://pizza-cart-api.herokuapp.com/api/pizzas/featured')
-                .then((result) => {
-                    this.pizzas = result.data.pizza
+                .then((response) => {
+                    this.featuredPizzas = response.data.pizzas
+                })
+               
+        },
+
+        setFeaturedPizza(pizza, featureStatus) {
+
+            const params = {
+                featured : featureStatus,
+                pizzaId : pizza.id
+            }
+
+            axios
+                .post('https://pizza-cart-api.herokuapp.com/api/pizzas/featured', params)
+                .then((response) => {
+                    this.createFeaturedPizzas()
                 })
         }
 
