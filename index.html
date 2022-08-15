@@ -99,24 +99,36 @@
                 <div class="AvailablePizza">
                     <h2>Featured Pizzas</h2>
                 </div>
-                <table class="myTable">
+                <div class="featured">
                     <template x-for="pizza in featuredPizzas">
-                        <tr>
+                        <div class="col-4">
 
-                            <td>
+                            <div class="row">
                                 <img x-bind:src="pizzaImg(pizza)" width="50" alt="">
-                            </td>
-                            <td x-text="pizza.flavour"></td>
-                            <td x-text="pizza.size"></td>
-                            <td x-text="pizza.price"></td>
-                            <td>
-                                <button x-on:click="add(pizza)">Add to Cart</button>
-                                <button x-on:click="setFeaturedPizza(pizza, false)">Remove Featured Pizza</button>
-                            </td>
+                            </div>
+
+                            <div class="row">
+                                <span x-text="pizza.flavour"></span>
+                            </div>
+
+                            <div class="row">
+                                <span x-text="pizza.size"></span>
+                            </div>
+
+                            <div class="row">
+                                <span x-text="pizza.price"></span>
+                            </div>
+                            
+                            <div class="row">
+                                <span>
+                                    <button x-on:click="add(pizza)">Add to Cart</button>
+                                    <button x-on:click="setFeaturedPizza(pizza, false)">Remove Featured Pizza</button>
+                                </span>
+                            </div> 
     
-                        <tr>
+                        </div>
                     </template>
-                </table>
+                </div>
 
             </div>
         </div>

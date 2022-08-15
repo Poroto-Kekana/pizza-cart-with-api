@@ -86,6 +86,16 @@ button {
 
 .feature {
   background-color: aqua;
+  display:inline-block;
+  position: center;
+}
+
+.featured img {
+  width: 50%;
+}
+
+.featured {
+  position: center;
 }
 
 /* TYPOGRAPHY */
